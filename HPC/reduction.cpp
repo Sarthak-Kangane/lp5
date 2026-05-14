@@ -46,10 +46,10 @@ void reduction_seq(vector <int> arr,int n)
     cout<<"Max time: "<<diff.count()<<endl;
 
     start=chrono::high_resolution_clock::now();
-    double avg=sum/n;
+    double avg=(double)sum/n;
     end=chrono::high_resolution_clock::now();
     diff=end-start;
-    cout<<"Avg is: "<<sum;
+    cout<<"Avg is: "<<avg;
     cout<<"Avg time: "<<diff.count()<<endl;
 }
 
@@ -60,7 +60,7 @@ void reduction_parallel(vector <int> arr,int n)
 
     int sum=0;
     start=chrono::high_resolution_clock::now();
-    #pragma omp parallel reduction(+ : sum)
+    #pragma omp parallel for reduction(+ : sum)
     for(int i=0;i<n;i++)
     {
         sum+=arr[i];
@@ -73,7 +73,7 @@ void reduction_parallel(vector <int> arr,int n)
     int min_val=INT_MAX,max_val=INT_MIN;
 
     start=chrono::high_resolution_clock::now();
-    #pragma omp parallel reduction(min : min_val)
+    #pragma omp parallel for reduction(min : min_val)
     for(int i=0;i<n;i++)
     {
         if(arr[i]<min_val)
@@ -87,7 +87,7 @@ void reduction_parallel(vector <int> arr,int n)
     cout<<"Min time: "<<diff.count()<<endl;
 
     start=chrono::high_resolution_clock::now();
-    #pragma omp parallel reduction(max : max_val)
+    #pragma omp parallel for reduction(max : max_val)
     for(int i=0;i<n;i++)
     {
         if(arr[i]>max_val)
@@ -101,10 +101,10 @@ void reduction_parallel(vector <int> arr,int n)
     cout<<"Max time: "<<diff.count()<<endl;
 
     start=chrono::high_resolution_clock::now();
-    double avg=sum/n;
+    double avg=(double)sum/n;
     end=chrono::high_resolution_clock::now();
     diff=end-start;
-    cout<<"Avg is: "<<sum;
+    cout<<"Avg is: "<<avg;
     cout<<"Avg time: "<<diff.count()<<endl;
 }
 
@@ -121,3 +121,8 @@ int main()
     cout<<"PARALLEL"<<endl;
     reduction_parallel(arr,n);
 }
+
+
+//How to run
+// g++ -fopenmp your_program.cpp -o program.exe
+//.\program.exe
